@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.upwork.googlesheetreader.ui.ViewModel
@@ -93,28 +94,39 @@ fun SpreadSheetList(
                         .padding(paddingValues),
                     contentAlignment = Alignment.Center
                 ) {
-
-                    LazyColumn(
-                        modifier = modifier.padding(vertical = 15.dp),
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-                        items(response) { item ->
-                            Text(
-                                modifier = modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 10.dp, horizontal = 5.dp)
-                                    .clickable {
-                                        viewModel.setData(item.properties?.title ?: "")
-                                        onNavigate.invoke()
-                                    },
-                                text = item.properties?.title ?: "",
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold,
-                                fontFamily = FontFamily.Serif
-                            )
-                            Divider(Modifier.height(1.dp))
+                    Column (modifier=modifier.padding(vertical = 15.dp, horizontal = 5.dp)){
+                        Text(
+                            text = "Sheets Available",
+                            modifier = modifier
+                                .fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = FontFamily.Serif
+                        )
+                        LazyColumn(
+                            modifier = modifier,
+                            verticalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+                            items(response) { item ->
+                                Text(
+                                    modifier = modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 10.dp, horizontal = 5.dp)
+                                        .clickable {
+                                            viewModel.setData(item.properties?.title ?: "")
+                                            onNavigate.invoke()
+                                        },
+                                    text = item.properties?.title ?: "",
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Medium,
+                                    fontFamily = FontFamily.Serif
+                                )
+                                Divider(Modifier.height(1.dp))
+                            }
                         }
                     }
+
                 }
             }
 

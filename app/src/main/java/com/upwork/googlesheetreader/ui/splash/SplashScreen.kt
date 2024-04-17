@@ -3,19 +3,23 @@ package com.upwork.googlesheetreader.ui.splash
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.view.WindowManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -28,7 +32,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(modifier: Modifier, navigateToHome: () -> Unit) {
     LaunchedEffect(Unit) {
-        delay(5000L)
+        delay(3000L)
         navigateToHome.invoke()
     }
     HideSystemBars()
@@ -38,7 +42,7 @@ fun SplashScreen(modifier: Modifier, navigateToHome: () -> Unit) {
         Image(painter = painterResource(id = R.drawable.logo_splash),
             contentDescription = "",
             modifier=modifier.fillMaxSize(),
-            contentScale = ContentScale.FillHeight)
+            contentScale = ContentScale.Crop)
     }
 }
 
@@ -55,7 +59,6 @@ fun HideSystemBars() {
     DisposableEffect(Unit) {
         val window = context.findActivity()?.window ?: return@DisposableEffect onDispose {}
         val insetsController = WindowCompat.getInsetsController(window, window.decorView)
-
         insetsController.apply {
             hide(WindowInsetsCompat.Type.statusBars())
             hide(WindowInsetsCompat.Type.navigationBars())
