@@ -26,6 +26,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -65,7 +68,10 @@ fun SpreadSheetDetails(modifier: Modifier, navigateBack: () -> Unit, viewModel: 
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 CircularProgressIndicator(
-                    modifier = modifier.size(50.dp)
+                    modifier = modifier.size(50.dp),
+                    strokeWidth = 10.dp,
+                    strokeCap = StrokeCap.Square,
+                    color = Color.Gray
                 )
             }
         }
@@ -102,7 +108,10 @@ fun SpreadSheetDetails(modifier: Modifier, navigateBack: () -> Unit, viewModel: 
                             Text(
                                 modifier = modifier
                                     .padding(vertical = 10.dp, horizontal = 5.dp),
-                                text = item[0]
+                                text = item[0],
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = FontFamily.Serif
                             )
                             QrCodeView(
                                 data = item[0],

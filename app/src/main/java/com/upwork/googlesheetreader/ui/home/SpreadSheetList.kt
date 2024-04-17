@@ -14,12 +14,14 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Colors
 import androidx.compose.material.Divider
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,7 +32,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.upwork.googlesheetreader.ui.ViewModel
 import com.upwork.googlesheetreader.ui.ViewModel.*
 
@@ -43,7 +50,6 @@ fun SpreadSheetList(
     navigateToPostScreen: () -> Unit
 ) {
     val homeUiState by viewModel.homeUiState.collectAsState()
-    var showMenu by remember { mutableStateOf(false) }
 
 
     LaunchedEffect(Unit) {
@@ -57,7 +63,10 @@ fun SpreadSheetList(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 CircularProgressIndicator(
-                    modifier = modifier.size(50.dp)
+                    modifier = modifier.size(50.dp),
+                    strokeWidth = 10.dp,
+                    strokeCap = StrokeCap.Square,
+                    color = Color.Gray
                 )
             }
         }
@@ -69,8 +78,8 @@ fun SpreadSheetList(
                     FloatingActionButton(onClick = {
                         viewModel.setSheetList(response)
                         navigateToPostScreen.invoke()
-                    }) {
-                        Icon(imageVector = Icons.Default.Add, contentDescription = "add")
+                    }, backgroundColor = Color.Gray) {
+                        Icon(imageVector = Icons.Default.Person, contentDescription = "add")
                     }
                 },
                 modifier = Modifier
@@ -98,7 +107,10 @@ fun SpreadSheetList(
                                         viewModel.setData(item.properties?.title ?: "")
                                         onNavigate.invoke()
                                     },
-                                text = item.properties?.title ?: ""
+                                text = item.properties?.title ?: "",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = FontFamily.Serif
                             )
                             Divider(Modifier.height(1.dp))
                         }
