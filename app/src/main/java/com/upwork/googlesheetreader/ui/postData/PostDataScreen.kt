@@ -1,6 +1,5 @@
 package com.upwork.googlesheetreader.ui.postData
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.upwork.googlesheetreader.ui.ViewModel
 import com.upwork.googlesheetreader.ui.ViewModel.HomeUiState
 import com.upwork.googlesheetreader.ui.postData.components.ExposedDropdownMenuBox
+import com.upwork.googlesheetreader.ui.postData.components.LoaderIndicator
 import com.upwork.googlesheetreader.ui.postData.components.SimpleOutlinedTextFieldSample
 
 
@@ -38,8 +37,8 @@ fun PostDataScreen(modifier: Modifier, viewModel: ViewModel) {
     val playerData by remember {
         mutableStateOf(
             PlayerData(
-                spreadSheetName = viewModel.sheetList.value.get(
-                    0
+                spreadSheetName = viewModel.sheetList.value.first.get(
+                    viewModel.sheetList.value.second
                 ).properties?.title ?: ""
             )
         )
@@ -102,15 +101,9 @@ fun PostDataScreen(modifier: Modifier, viewModel: ViewModel) {
             }
 
             is HomeUiState.Loading -> {
-                CircularProgressIndicator()
-            }
-
-            is HomeUiState.Error -> {
-                //    val error = (homeUiState as HomeUiState.Error).message
-                // Text(text = error)
+                LoaderIndicator(modifier)
 
             }
-
             else -> {}
         }
 
@@ -121,7 +114,7 @@ fun PostDataScreen(modifier: Modifier, viewModel: ViewModel) {
             shape = RoundedCornerShape(8.dp), onClick = {
                 isSubmitClicked = true
             }) {
-            Text(text = "submit data")
+            Text(text = "Submit data")
         }
 
     }
@@ -129,11 +122,12 @@ fun PostDataScreen(modifier: Modifier, viewModel: ViewModel) {
 
 
 data class PlayerData(
-    var spreadSheetName: String="",
+    var spreadSheetName: String = "",
     var firstName: String = "",
     var secondName: String = "",
     var age: String = "",
     var position: String = "",
+    var isCaptured: String = "",
     var other: String = ""
 
 )

@@ -23,7 +23,7 @@ import com.upwork.googlesheetreader.ui.theme.GoogleSheetReaderTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var viewModel = ViewModel()
+        val viewModel = ViewModel()
         setContent {
             GoogleSheetReaderTheme {
                 // A surface container using the 'background' color from the theme

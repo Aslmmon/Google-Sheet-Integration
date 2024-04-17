@@ -1,5 +1,6 @@
 package com.upwork.googlesheetreader.ui
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -26,15 +27,16 @@ class ViewModel : ViewModel() {
     private val _data = mutableStateOf<String>("")
     val data: State<String> = _data
 
-    private val _sheetList = mutableStateOf(emptyList<Sheet>())
-    val sheetList: State<List<Sheet>> = _sheetList
+    val pair = Pair(emptyList<Sheet>(), 0)
+    private val _sheetList = mutableStateOf(Pair(emptyList<Sheet>(), 0))
+    val sheetList: MutableState<Pair<List<Sheet>, Int>> = _sheetList
 
     fun setData(newData: String) {
         _data.value = newData
     }
 
-    fun setSheetList(newData: List<Sheet>) {
-        _sheetList.value = newData
+    fun setSheetList(newData: List<Sheet>, index: Int) {
+        _sheetList.value = Pair(newData, index)
     }
 
     fun setInitApiCalled(isInit: Boolean) {

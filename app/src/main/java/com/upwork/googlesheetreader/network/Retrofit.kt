@@ -36,7 +36,7 @@ interface RetrofitNetworkApi {
     suspend fun getSpreadSheetData(
     ): SpreadSheetResponse
 
-    @GET(value = "/v4/spreadsheets/1SMrpeJC2isCTJotRYXBDNENNbDVzCcazonOOwUQ-Vf0/values/{name-sheet}!A2:E150?key=${API_KEY}")
+    @GET(value = "/v4/spreadsheets/1SMrpeJC2isCTJotRYXBDNENNbDVzCcazonOOwUQ-Vf0/values/{name-sheet}!A2:F150?key=${API_KEY}")
     suspend fun getDetailsOfSpreadSheet(
         @Path("name-sheet") nameSheet: String
     ): SpreadSheetDetails
