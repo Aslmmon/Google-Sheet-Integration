@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
                             }, viewModel = viewModel)
                         }
                         composable("postScreen") {
-                            PostDataScreen(modifier = Modifier)
+                            PostDataScreen(modifier = Modifier,viewModel= viewModel)
                         }
 
                         composable("splash") {

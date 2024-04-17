@@ -16,15 +16,10 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -71,6 +66,7 @@ fun SpreadSheetList(
             Scaffold(
                 floatingActionButton = {
                     FloatingActionButton(onClick = {
+                        viewModel.setSheetList(response)
                         navigateToPostScreen.invoke()
                     }) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "add")
@@ -97,10 +93,10 @@ fun SpreadSheetList(
                                 modifier = modifier
                                     .padding(vertical = 10.dp, horizontal = 5.dp)
                                     .clickable {
-                                        viewModel.setData(item.properties.title)
+                                        viewModel.setData(item.properties?.title ?: "")
                                         onNavigate.invoke()
                                     },
-                                text = item.properties.title
+                                text = item.properties?.title ?: ""
                             )
                             Divider(Modifier.height(1.dp))
                         }

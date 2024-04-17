@@ -1,7 +1,9 @@
 package com.upwork.googlesheetreader.ui
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.idmt.simplevoice.ui.network.RetrofitMoviesNetworkApi
@@ -24,8 +26,15 @@ class ViewModel : ViewModel() {
     private val _data = mutableStateOf<String>("")
     val data: State<String> = _data
 
+    private val _sheetList = mutableStateOf(emptyList<Sheet>())
+    val sheetList: State<List<Sheet>> = _sheetList
+
     fun setData(newData: String) {
         _data.value = newData
+    }
+
+    fun setSheetList(newData: List<Sheet>) {
+        _sheetList.value = newData
     }
 
     fun setInitApiCalled(isInit: Boolean) {
@@ -90,7 +99,7 @@ class ViewModel : ViewModel() {
 
             try {
                 retrofitMoviesNetworkApi.postDataToSpreadSheet(
-                    "Sheet249",
+                    playerData.spreadSheetName,
                     playerData.firstName,
                     playerData.secondName,
                     playerData.age,
