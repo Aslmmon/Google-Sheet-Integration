@@ -1,4 +1,4 @@
-package com.upwork.googlesheetreader.ui
+package com.upwork.googlesheetreader.ui.details
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
@@ -28,10 +28,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.lightspark.composeqr.QrCodeView
+import com.upwork.googlesheetreader.ui.ViewModel
 import com.upwork.googlesheetreader.ui.ViewModel.HomeUiState
 
 @Composable
-fun SpreadSheetDetails(modifier: Modifier,navigateBack:()->Unit,viewModel:ViewModel) {
+fun SpreadSheetDetails(modifier: Modifier,navigateBack:()->Unit,viewModel: ViewModel) {
     val homeUiState by viewModel.homeUiState.collectAsState()
     val openAlertDialog = remember { mutableStateOf(false) }
     val qrCodeText = remember { mutableStateOf("") }

@@ -10,6 +10,7 @@ espressoCore = "3.5.1"
 lifecycleRuntimeKtx = "2.7.0"
 activityCompose = "1.8.2"
 composeBom = "2024.03.00"
+lottieCompose = "6.4.0"
 material = "1.6.4"
 navigationCompose = "2.7.7"
 retrofitKotlinxSerializationJson = "1.0.0"
@@ -25,6 +26,7 @@ androidx-material-icons-extended = { module = "androidx.compose.material:materia
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 compose-qr-code = { module = "com.lightspark:compose-qr-code", version.ref = "composeQrCode" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

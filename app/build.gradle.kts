@@ -75,5 +75,7 @@ dependencies {
     implementation(libs.okhttp.logging)
     implementation (libs.androidx.datastore.preferences)
     implementation(libs.compose.qr.code)
+    implementation (libs.lottie.compose)
+
 
 }

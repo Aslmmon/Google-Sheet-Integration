@@ -1,7 +1,6 @@
 package com.upwork.googlesheetreader
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,18 +13,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.idmt.simplevoice.ui.network.RetrofitMoviesNetworkApi
-import com.idmt.simplevoice.ui.network.RetrofitNetworkApi
-import com.upwork.googlesheetreader.ui.PostDataScreen
-import com.upwork.googlesheetreader.ui.SpreadSheetDetails
-import com.upwork.googlesheetreader.ui.SpreadSheetList
+import com.upwork.googlesheetreader.ui.postData.PostDataScreen
+import com.upwork.googlesheetreader.ui.details.SpreadSheetDetails
+import com.upwork.googlesheetreader.ui.home.SpreadSheetList
 import com.upwork.googlesheetreader.ui.ViewModel
+import com.upwork.googlesheetreader.ui.splash.SplashScreen
 import com.upwork.googlesheetreader.ui.theme.GoogleSheetReaderTheme
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    NavHost(navController, startDestination = "spreadsheet") {
+                    NavHost(navController, startDestination = "splash") {
                         composable("spreadsheet") {
                             SpreadSheetList(
                                 modifier = Modifier,
@@ -47,16 +40,25 @@ class MainActivity : ComponentActivity() {
                                     navController.navigate("spreadsheetDetails")
                                 }, navigateToPostScreen = {
                                     navController.navigate("postScreen")
-                                }, viewModel = viewModel)
+                                }, viewModel = viewModel
+                            )
 
                         }
                         composable("spreadsheetDetails") {
                             SpreadSheetDetails(modifier = Modifier, navigateBack = {
                                 navController.navigateUp()
-                            },viewModel=viewModel)
+                            }, viewModel = viewModel)
                         }
                         composable("postScreen") {
                             PostDataScreen(modifier = Modifier)
+                        }
+
+                        composable("splash") {
+                            SplashScreen(modifier = Modifier, navigateToHome = {
+                                navController.navigate("spreadsheet") {
+                                    navController.popBackStack()
+                                }
+                            })
                         }
 
                     }

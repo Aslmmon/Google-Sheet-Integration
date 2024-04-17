@@ -6,11 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.idmt.simplevoice.ui.network.RetrofitMoviesNetworkApi
 import com.upwork.googlesheetreader.network.model.spreadsheet.Sheet
-import kotlinx.coroutines.delay
+import com.upwork.googlesheetreader.ui.postData.PlayerData
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
 
 class ViewModel : ViewModel() {
