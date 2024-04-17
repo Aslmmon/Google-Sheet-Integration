@@ -129,7 +129,7 @@ fun PostDataScreen(modifier: Modifier, viewModel: ViewModel) {
 
 
 data class PlayerData(
-    var spreadSheetName: String,
+    var spreadSheetName: String="",
     var firstName: String = "",
     var secondName: String = "",
     var age: String = "",

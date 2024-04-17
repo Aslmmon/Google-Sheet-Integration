@@ -30,13 +30,18 @@ import androidx.compose.ui.window.Dialog
 import com.lightspark.composeqr.QrCodeView
 import com.upwork.googlesheetreader.ui.ViewModel
 import com.upwork.googlesheetreader.ui.ViewModel.HomeUiState
+import com.upwork.googlesheetreader.ui.postData.PlayerData
 
 @Composable
 fun SpreadSheetDetails(modifier: Modifier,navigateBack:()->Unit,viewModel: ViewModel) {
     val homeUiState by viewModel.homeUiState.collectAsState()
     val openAlertDialog = remember { mutableStateOf(false) }
     val qrCodeText = remember { mutableStateOf("") }
-
+    val playerData by remember {
+        mutableStateOf(
+            PlayerData()
+        )
+    }
 
         LaunchedEffect(Unit) {
             viewModel.getSpreadsheetDetails(viewModel.data.value)
@@ -70,6 +75,7 @@ fun SpreadSheetDetails(modifier: Modifier,navigateBack:()->Unit,viewModel: ViewM
 
             LazyColumn(modifier = modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 items(response) { item ->
+
                     Row(
                         modifier = modifier
                             .fillMaxWidth()
@@ -85,7 +91,12 @@ fun SpreadSheetDetails(modifier: Modifier,navigateBack:()->Unit,viewModel: ViewM
                             modifier = Modifier
                                 .size(50.dp)
                                 .clickable {
-                                    qrCodeText.value = item[0]
+                                    with(playerData) {
+                                        firstName = item[0]
+//                                        secondName = item[1]
+//                                        age = item[2]
+//                                        position = item[3]
+                                    }
                                     openAlertDialog.value = true
                                 }
                         )
@@ -100,7 +111,7 @@ fun SpreadSheetDetails(modifier: Modifier,navigateBack:()->Unit,viewModel: ViewM
     when (openAlertDialog.value) {
         true -> MinimalDialog(onDismissRequest = {
             openAlertDialog.value = false
-        }, text = qrCodeText.value)
+        }, playerData)
 
         false -> {}
     }
@@ -108,7 +119,7 @@ fun SpreadSheetDetails(modifier: Modifier,navigateBack:()->Unit,viewModel: ViewM
 }
 
 @Composable
-fun MinimalDialog(onDismissRequest: () -> Unit, text: String) {
+fun MinimalDialog(onDismissRequest: () -> Unit, playerData: PlayerData) {
     Dialog(onDismissRequest = { onDismissRequest() }) {
         Card(
             modifier = Modifier
@@ -118,9 +129,12 @@ fun MinimalDialog(onDismissRequest: () -> Unit, text: String) {
             shape = RoundedCornerShape(16.dp),
         ) {
             QrCodeView(
-                data = text,
+                data = playerData.firstName,
                 modifier = Modifier.size(200.dp)
             )
+//                Text(text = playerData.secondName)
+//                Text(text = playerData.age)
+//                Text(text = playerData.position)
         }
     }
 }
