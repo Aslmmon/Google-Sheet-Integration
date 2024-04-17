@@ -1,5 +1,6 @@
 package com.upwork.googlesheetreader.ui.splash
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +9,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
@@ -21,11 +24,12 @@ fun SplashScreen(modifier: Modifier, navigateToHome: () -> Unit) {
         navigateToHome.invoke()
     }
     Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier.fillMaxSize()
     ) {
-        Loader()
+        Image(painter = painterResource(id = R.drawable.logo_splash),
+            contentDescription = "",
+            modifier=modifier.fillMaxSize(),
+            contentScale = ContentScale.FillHeight)
     }
 }
 
