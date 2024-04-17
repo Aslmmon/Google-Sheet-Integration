@@ -133,5 +133,7 @@ data class PlayerData(
     var firstName: String = "",
     var secondName: String = "",
     var age: String = "",
-    var position: String = ""
+    var position: String = "",
+    var other: String = ""
+
 )

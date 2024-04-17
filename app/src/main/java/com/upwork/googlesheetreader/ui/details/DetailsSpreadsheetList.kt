@@ -1,5 +1,6 @@
 package com.upwork.googlesheetreader.ui.details
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,7 +26,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.lightspark.composeqr.QrCodeView
 import com.upwork.googlesheetreader.ui.ViewModel
@@ -33,7 +36,7 @@ import com.upwork.googlesheetreader.ui.ViewModel.HomeUiState
 import com.upwork.googlesheetreader.ui.postData.PlayerData
 
 @Composable
-fun SpreadSheetDetails(modifier: Modifier,navigateBack:()->Unit,viewModel: ViewModel) {
+fun SpreadSheetDetails(modifier: Modifier, navigateBack: () -> Unit, viewModel: ViewModel) {
     val homeUiState by viewModel.homeUiState.collectAsState()
     val openAlertDialog = remember { mutableStateOf(false) }
     val qrCodeText = remember { mutableStateOf("") }
@@ -43,9 +46,9 @@ fun SpreadSheetDetails(modifier: Modifier,navigateBack:()->Unit,viewModel: ViewM
         )
     }
 
-        LaunchedEffect(Unit) {
-            viewModel.getSpreadsheetDetails(viewModel.data.value)
-        }
+    LaunchedEffect(Unit) {
+        viewModel.getSpreadsheetDetails(viewModel.data.value)
+    }
 
 
     BackHandler {
@@ -69,42 +72,49 @@ fun SpreadSheetDetails(modifier: Modifier,navigateBack:()->Unit,viewModel: ViewM
 
         is HomeUiState.Details -> {
             val response = (homeUiState as HomeUiState.Details).data
-            if (response.isEmpty()){
+            if (response.isEmpty()) {
                 Text(text = "empty Data")
-            }else
+            } else
 
-            LazyColumn(modifier = modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                items(response) { item ->
+                LazyColumn(modifier = modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    items(response) { item ->
 
-                    Row(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .padding(5.dp), horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
+                        Row(
                             modifier = modifier
-                                .padding(vertical = 10.dp, horizontal = 5.dp),
-                            text = item[0]
-                        )
-                        QrCodeView(
-                            data = item[0],
-                            modifier = Modifier
-                                .size(50.dp)
+                                .fillMaxWidth()
                                 .clickable {
                                     with(playerData) {
-                                        firstName = item[0]
-//                                        secondName = item[1]
-//                                        age = item[2]
-//                                        position = item[3]
+                                        try {
+                                            firstName = item[0]
+                                            secondName = item[1]
+                                            age = item[2]
+                                            position = item[3]
+                                            other = item[4]
+                                        } catch (e: Exception) {
+                                            Log.e("error", e.message.toString())
+                                        }
+
                                     }
                                     openAlertDialog.value = true
                                 }
-                        )
+                                .padding(5.dp), horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                modifier = modifier
+                                    .padding(vertical = 10.dp, horizontal = 5.dp),
+                                text = item[0]
+                            )
+                            QrCodeView(
+                                data = item[0],
+                                modifier = Modifier
+                                    .size(50.dp)
+                            )
+                        }
+                        Divider(Modifier.height(1.dp))
                     }
-                    Divider(Modifier.height(1.dp))
                 }
-            }
         }
+
         else -> {}
     }
 
@@ -124,17 +134,27 @@ fun MinimalDialog(onDismissRequest: () -> Unit, playerData: PlayerData) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(350.dp)
+                .height(400.dp)
                 .padding(16.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
-            QrCodeView(
-                data = playerData.firstName,
-                modifier = Modifier.size(200.dp)
-            )
-//                Text(text = playerData.secondName)
-//                Text(text = playerData.age)
-//                Text(text = playerData.position)
+            Column(
+                modifier = Modifier.fillMaxSize().padding(vertical = 15.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(5.dp)
+            ) {
+                QrCodeView(
+                    data = playerData.firstName,
+                    modifier = Modifier.size(200.dp)
+                )
+                Text(text = playerData.firstName + " " + playerData.secondName, fontWeight = FontWeight.Bold, fontSize = 22.sp)
+                if (playerData.age.isNotEmpty()) Text(text = "Age : " + playerData.age,fontWeight = FontWeight.Bold)
+                if (playerData.position.isNotEmpty()) Text(text = "Position : " + playerData.position,fontWeight = FontWeight.Bold)
+                if (playerData.other.isNotEmpty()) Text(text = "other : " + playerData.other,fontWeight = FontWeight.Bold)
+
+            }
+
+
         }
     }
 }
