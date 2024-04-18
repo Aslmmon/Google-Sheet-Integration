@@ -17,6 +17,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -127,7 +128,7 @@ fun LoaderIndicator(modifier: Modifier){
             modifier = modifier.size(50.dp),
             strokeWidth = 10.dp,
             strokeCap = StrokeCap.Square,
-            color = Color.Gray
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }

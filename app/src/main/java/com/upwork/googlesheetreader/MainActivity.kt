@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                         composable("spreadsheet") {
                             SpreadSheetList(
                                 modifier = Modifier,
-                                onNavigate = {
+                                onNavigateToDetails = {
                                     navController.navigate("spreadsheetDetails")
                                 }, navigateToPostScreen = {
                                     navController.navigate("postScreen")
@@ -65,21 +65,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    GoogleSheetReaderTheme {
-        Greeting("Android")
     }
 }

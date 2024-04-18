@@ -14,13 +14,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Divider
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Divider
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.rounded.AddCircleOutline
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -43,7 +44,7 @@ import com.upwork.googlesheetreader.ui.postData.components.LoaderIndicator
 fun SpreadSheetList(
     modifier: Modifier,
     viewModel: ViewModel,
-    onNavigate: () -> Unit,
+    onNavigateToDetails: () -> Unit,
     navigateToPostScreen: () -> Unit
 ) {
     val homeUiState by viewModel.homeUiState.collectAsState()
@@ -65,8 +66,8 @@ fun SpreadSheetList(
                     FloatingActionButton(onClick = {
                         viewModel.setSheetList(response,0)
                         navigateToPostScreen.invoke()
-                    }, backgroundColor = Color.Gray) {
-                        Icon(imageVector = Icons.Default.Person, contentDescription = "add")
+                    }, containerColor = MaterialTheme.colorScheme.primary) {
+                        Icon(imageVector = Icons.Default.Person, contentDescription = "add", tint = Color.White)
                     }
                 },
                 modifier = Modifier
@@ -107,7 +108,7 @@ fun SpreadSheetList(
                                             .padding(vertical = 10.dp, horizontal = 5.dp)
                                             .clickable {
                                                 viewModel.setData(item.properties?.title ?: "")
-                                                onNavigate.invoke()
+                                                onNavigateToDetails.invoke()
                                             },
                                         text = item.properties?.title ?: "",
                                         fontSize = 16.sp,

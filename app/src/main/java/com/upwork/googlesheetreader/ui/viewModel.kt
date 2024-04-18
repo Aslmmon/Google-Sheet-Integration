@@ -24,7 +24,7 @@ class ViewModel : ViewModel() {
     private val _initApiCalled = mutableStateOf(false)
     val initApiCalled: State<Boolean> = _initApiCalled
 
-    private val _data = mutableStateOf<String>("")
+    private val _data = mutableStateOf("")
     val data: State<String> = _data
 
     val pair = Pair(emptyList<Sheet>(), 0)
